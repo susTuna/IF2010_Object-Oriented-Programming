@@ -10,18 +10,12 @@ TicketManager::TicketManager(string eventName){
 
 }
 
-TicketManager::TicketManager(string eventName, int vipCapacity, int regularCapacity){
-    int total = vipCapacity + regularCapacity;
-    if (total > VENUE_CAPACITY) {
-        cout << "The total capacity you construct is " << total << ", meanwhile the venue capacity is 15" << endl;
+TicketManager::TicketManager(string eventName, int vipCapacity, int regularCapacity) : eventName(eventName), vipCapacity(vipCapacity), regularCapacity(regularCapacity), ticketCount(0), currentVIPTickets(0), currentRegularTickets(0)
+{
+    if (regularCapacity + vipCapacity > VENUE_CAPACITY)
+    {
+        cout << "The total capacity you construct is " << regularCapacity + vipCapacity << ", meanwhile the venue capacity is 15" << endl;
     }
-
-    this->eventName = eventName;
-    this->vipCapacity = vipCapacity;
-    this->regularCapacity = regularCapacity;
-    this->ticketCount = 0;
-    this->currentRegularTickets = 0;
-    this->currentVIPTickets = 0;
 }
 
 TicketManager::~TicketManager(){
@@ -35,10 +29,7 @@ string TicketManager::getEventName() const{
 }
 
 void TicketManager::buyTicket(const string &ownerName, bool isVIP){
-    int total = this->vipCapacity + this->regularCapacity;
-    int tot = this->currentRegularTickets + this->currentVIPTickets;
-
-    if (total == tot) {
+    if (ticketCount >= VENUE_CAPACITY){
         cout << "Error: All tickets are sold out!" << endl;
         return;
     }
@@ -47,7 +38,7 @@ void TicketManager::buyTicket(const string &ownerName, bool isVIP){
         if (this->vipCapacity == this->currentVIPTickets) {
         cout << "Error: No VIP tickets left!" << endl;
         return;
-    }
+        }
         currentVIPTickets++;
         string tix = "V" + to_string(currentVIPTickets);
         tickets[ticketCount] = new VIPTicket(tix,ownerName);
@@ -57,7 +48,7 @@ void TicketManager::buyTicket(const string &ownerName, bool isVIP){
         if (this->regularCapacity == this->currentRegularTickets) {
         cout << "Error: No Regular tickets left!" << endl;
         return;
-    }
+         }
         currentRegularTickets++;
         string tix = "R" + to_string(currentRegularTickets);
         tickets[ticketCount] = new RegularTicket(tix,ownerName);
