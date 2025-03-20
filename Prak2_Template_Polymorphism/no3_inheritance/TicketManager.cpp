@@ -10,12 +10,17 @@ TicketManager::TicketManager(string eventName){
 
 }
 
-TicketManager::TicketManager(string eventName, int vipCapacity, int regularCapacity) : eventName(eventName), vipCapacity(vipCapacity), regularCapacity(regularCapacity), ticketCount(0), currentVIPTickets(0), currentRegularTickets(0)
-{
-    if (regularCapacity + vipCapacity > VENUE_CAPACITY)
-    {
-        cout << "The total capacity you construct is " << regularCapacity + vipCapacity << ", meanwhile the venue capacity is 15" << endl;
-    }
+TicketManager::TicketManager(string eventName, int vipCapacity, int regularCapacity){
+    int total = vipCapacity + regularCapacity;
+    if (total > VENUE_CAPACITY) {
+        cout << "The total capacity you construct is " << total << ", meanwhile the venue capacity is 15" << endl;
+        }
+    this->eventName = eventName;
+    this->vipCapacity = vipCapacity;
+    this->regularCapacity = regularCapacity;
+    this->ticketCount = 0;
+    this->currentRegularTickets = 0;
+    this->currentVIPTickets = 0;
 }
 
 TicketManager::~TicketManager(){
